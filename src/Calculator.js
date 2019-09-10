@@ -2,14 +2,14 @@ import React, {Component} from "react";
 import CalculatorDisplay from "./CalculatorDisplay";
 import CalculatorButtonGrid from "./CalculatorButtonGrid";
 import {ADD, MIN, MUL, DIV} from "./MathOperations"
-import ExpressionTreeCostructor from "./expression-graph/ExpressionGraphConstructor";
+import ExpressionParser from "./expression-graph/ExpressionParser";
 
 class Calculator extends Component {
     constructor(){
         super();
         this.state = {
             displayValue: 0,
-            expression: ""
+            expression: "0"
         }
     }
     onNumberPressed = (num) => {
@@ -42,7 +42,7 @@ class Calculator extends Component {
         }
     }
     onEqualPressed = () => {
-        const exprTree = new ExpressionTreeCostructor(this.state.expression);
+        const exprTree = new ExpressionParser(this.state.expression);
         this.setState({
             displayValue: exprTree.resolve(),
             expression: ""
