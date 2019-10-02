@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import partial from "lodash/partial"
-import {ADD, MIN,MUL, DIV} from "./MathOperations"
+import {ADD, MIN,MUL, DIV} from "../MathOperations"
 import styles from "./CalculatorButtonGrid.module.scss"
 class CalculatorButtonGrid extends PureComponent {
 

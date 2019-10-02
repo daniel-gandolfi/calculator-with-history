@@ -1,15 +1,15 @@
 import React, {Component} from "react";
-import CalculatorDisplay from "./CalculatorDisplay";
-import CalculatorButtonGrid from "./CalculatorButtonGrid";
-import {ADD, MIN, MUL, DIV} from "./MathOperations"
-import ExpressionNode from "./expression-graph/ExpressionNode";
-import ExpressionTreeCostructor from "./expression-graph/ExpressionTreeCostructor";
+import CalculatorDisplay from "../CalculatorDisplay/CalculatorDisplay";
+import CalculatorButtonGrid from "../CalculatorButtonGrid/CalculatorButtonGrid";
+import {ADD, MIN, MUL, DIV} from "../MathOperations"
+import ExpressionNode from "../expression-graph/ExpressionNode";
+import ExpressionTreeCostructor from "../expression-graph/ExpressionTreeCostructor";
 import styles from "./Calculator.module.scss"
 
 import {
     AddExpressionNode, DivExpressionNode,
     MinExpressionNode, MulExpressionNode
-} from "./expression-graph/MathOperationNodes";
+} from "../expression-graph/MathOperationNodes";
 
 class Calculator extends Component {
     constructor(){
