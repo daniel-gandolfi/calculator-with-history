@@ -2,55 +2,80 @@ import React, {Component} from "react";
 import CalculatorDisplay from "./CalculatorDisplay";
 import CalculatorButtonGrid from "./CalculatorButtonGrid";
 import {ADD, MIN, MUL, DIV} from "./MathOperations"
-import ExpressionParser from "./expression-graph/ExpressionParser";
+import {ExpressionParser} from "./expression-graph/ExpressionParser";
+import ExpressionNode from "./expression-graph/ExpressionNode";
+import ExpressionTreeCostructor from "./expression-graph/ExpressionTreeCostructor";
+
+import {
+    AddExpressionNode, DivExpressionNode,
+    MinExpressionNode, MulExpressionNode
+} from "./expression-graph/MathOperationNodes";
 
 class Calculator extends Component {
     constructor(){
         super();
         this.state = {
-            displayValue: 0,
-            expression: "0"
+            display: "0",
+            tree: new ExpressionTreeCostructor(),
+            isEqualJustPressed: false
         }
     }
     onNumberPressed = (num) => {
+
+        var clearField = this.state.isEqualJustPressed || this.state.display === "0"
+        var displayValue ;
+        if (clearField) {
+            displayValue = num
+        } else {
+            displayValue = this.state.display + "" + num
+        }
+
         this.setState({
-            expression: this.state.expression + num
+            display: displayValue,
+            isEqualJustPressed: false
         })
     }
     onOperationPressed = (mathOperation)=> {
+        var operationNode;
         switch (mathOperation) {
             case ADD:
-                this.setState({
-                    expression: this.state.expression + "+"
-                })
+                operationNode = new AddExpressionNode([]);
                 break;
             case MIN:
-                this.setState({
-                    expression: this.state.expression + "-"
-                })
+                operationNode = new MinExpressionNode([]);
                 break;
             case MUL:
-                this.setState({
-                    expression: this.state.expression + "*"
-                })
+                operationNode = new MulExpressionNode([]);
                 break;
             case DIV:
-                this.setState({
-                    expression: this.state.expression + "/"
-                })
+                operationNode = new DivExpressionNode([]);
                 break;
         }
+
+        var number = Number(this.state.display)
+        var tree = this.state.tree;
+        tree.addNode(new ExpressionNode(number))
+        tree.addNode(operationNode);
+        this.setState({
+            display: "0",
+            tree,
+            isEqualJustPressed: false
+        })
     }
     onEqualPressed = () => {
-        const exprTree = new ExpressionParser(this.state.expression);
+        var number = Number(this.state.display)
+        var tree = this.state.tree;
+        tree.addNode(new ExpressionNode(number))
+
         this.setState({
-            displayValue: exprTree.resolve(),
-            expression: ""
+            display: tree.getRoot().resolve(),
+            tree: tree,
+            isEqualJustPressed: true
         })
     }
     render(){
         return <>
-            <CalculatorDisplay value={this.state.displayValue}></CalculatorDisplay>
+            <CalculatorDisplay value={this.state.display}></CalculatorDisplay>
             <CalculatorButtonGrid  onNumberPressed={this.onNumberPressed} onOperationPressed={this.onOperationPressed}
                 onEqualPressed={this.onEqualPressed}
             ></CalculatorButtonGrid>

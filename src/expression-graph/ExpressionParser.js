@@ -69,4 +69,7 @@ function ExpressionParser(expression) {
     return treeConstructor.getRoot();
 }
 
-export default ExpressionParser;
+export default {
+    ExpressionParser,
+    _createOperationNodeFromChar: _createOperationNodeFromChar
+};
