@@ -145,7 +145,6 @@ function ExpressionTreeCostructor() {
     return {
         addNode: _addNode,
         getRoot: ()=>getNodeRoot.call(this,previousNode)
-
     }
 }
 
