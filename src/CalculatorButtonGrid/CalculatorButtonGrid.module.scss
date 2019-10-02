@@ -6,6 +6,8 @@
 .button {
   border:none;
   color: $main-text-color;
+  font-size: inherit;
+  padding: .75rem;
 }
 .button--dot, .button--number {
   @extend .button;
