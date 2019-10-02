@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import CalculatorDisplay from "./CalculatorDisplay";
 import CalculatorButtonGrid from "./CalculatorButtonGrid";
 import {ADD, MIN, MUL, DIV} from "./MathOperations"
-import {ExpressionParser} from "./expression-graph/ExpressionParser";
 import ExpressionNode from "./expression-graph/ExpressionNode";
 import ExpressionTreeCostructor from "./expression-graph/ExpressionTreeCostructor";
 
