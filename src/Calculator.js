@@ -4,6 +4,7 @@ import CalculatorButtonGrid from "./CalculatorButtonGrid";
 import {ADD, MIN, MUL, DIV} from "./MathOperations"
 import ExpressionNode from "./expression-graph/ExpressionNode";
 import ExpressionTreeCostructor from "./expression-graph/ExpressionTreeCostructor";
+import styles from "./Calculator.module.scss"
 
 import {
     AddExpressionNode, DivExpressionNode,
@@ -31,6 +32,12 @@ class Calculator extends Component {
 
         this.setState({
             display: displayValue,
+            isEqualJustPressed: false
+        })
+    }
+    onDotPressed = () => {
+        this.setState({
+            display: this.state.display + ".",
             isEqualJustPressed: false
         })
     }
@@ -73,12 +80,12 @@ class Calculator extends Component {
         })
     }
     render(){
-        return <>
+        return <div className={styles.container}>
             <CalculatorDisplay value={this.state.display}></CalculatorDisplay>
             <CalculatorButtonGrid  onNumberPressed={this.onNumberPressed} onOperationPressed={this.onOperationPressed}
-                onEqualPressed={this.onEqualPressed}
+                onEqualPressed={this.onEqualPressed} onDotPressed={this.onDotPressed}
             ></CalculatorButtonGrid>
-        </>
+        </div>
     }
 }
 export default Calculator

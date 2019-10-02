@@ -1,0 +1,25 @@
+@import "theme";
+.container{
+  display: grid;
+  grid-template: 1fr 1fr / 1fr 1fr 1fr 1fr;
+}
+.button {
+  border:none;
+  color: $main-text-color;
+}
+.button--dot, .button--number {
+  @extend .button;
+  background:none;
+}
+.button--zero {
+  @extend .button--number;
+  grid-column: 1/3;
+}
+.button--operation {
+  @extend .button;
+  background: #8c8c8c;
+}
+.button--math-operation {
+  @extend .button;
+  background: #ff7700;
+}
