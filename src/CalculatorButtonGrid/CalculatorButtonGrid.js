@@ -13,7 +13,8 @@ class CalculatorButtonGrid extends PureComponent {
             onDotPressed,
             onBackPressed,
             onForwardPressed,
-            onDeletePressed
+            onDeletePressed,
+            onResetPressed
         } = this.props;
         return <div className={styles.container}>
             <button className={styles["button--operation"]} onClick={onBackPressed}>&#x27F2;</button>
@@ -35,6 +36,7 @@ class CalculatorButtonGrid extends PureComponent {
             <button className={styles["button--number"]} onClick={partial(onNumberPressed,9)}>9</button>
             <button className={styles["button--math-operation"]} onClick={partial(onOperationPressed,MUL)}>x</button>
 
+            <button className={styles["button--operation"]} onClick={onResetPressed}>AC</button>
             <button className={styles["button--zero"]} onClick={partial(onNumberPressed,0)}>0</button>
             <button className={styles["button--dot"]} onClick={onDotPressed}>.</button>
             <button className={styles["button--math-operation"]} onClick={onEqualPressed}>=</button>

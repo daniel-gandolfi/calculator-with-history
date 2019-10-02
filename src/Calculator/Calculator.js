@@ -10,15 +10,17 @@ import {
     AddExpressionNode, DivExpressionNode,
     MinExpressionNode, MulExpressionNode
 } from "../expression-graph/MathOperationNodes";
-
+function createDefaultState(){
+    return {
+        display: "0",
+        tree: new ExpressionTreeCostructor(),
+        isEqualJustPressed: false
+    }
+}
 class Calculator extends Component {
     constructor(){
         super();
-        this.state = {
-            display: "0",
-            tree: new ExpressionTreeCostructor(),
-            isEqualJustPressed: false
-        }
+        this.state = createDefaultState();
     }
     onNumberPressed = (num) => {
 
@@ -79,11 +81,29 @@ class Calculator extends Component {
             isEqualJustPressed: true
         })
     }
+    reset = () => {
+        this.setState(createDefaultState())
+    }
+    deleteLastChar = () => {
+        const display = "" + this.state.display;
+        if (display !== "0") {
+            this.setState({
+                display: (display.length !== 1 ? display.substr(0, display.length - 1) : "0")
+            })
+        }
+    }
+    onBackPressed = () => {
+
+    }
+    onForwardPressed= () => {
+
+    }
     render(){
         return <div className={styles.container}>
             <CalculatorDisplay value={this.state.display}></CalculatorDisplay>
             <CalculatorButtonGrid  onNumberPressed={this.onNumberPressed} onOperationPressed={this.onOperationPressed}
-                onEqualPressed={this.onEqualPressed} onDotPressed={this.onDotPressed}
+                onEqualPressed={this.onEqualPressed} onDotPressed={this.onDotPressed} onResetPressed={this.reset}
+                onDeletePressed={this.deleteLastChar} onBackPressed={this.onBackPressed} onForwardPressed={this.onForwardPressed}
             ></CalculatorButtonGrid>
         </div>
     }

@@ -3,4 +3,8 @@
   background: $main-background-color;
   color: $main-text-color;
   font-size: 20px;
+  height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
 }
