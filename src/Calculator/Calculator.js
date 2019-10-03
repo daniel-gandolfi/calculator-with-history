@@ -37,7 +37,7 @@ class Calculator extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return (this.state.display !== nextState.state.display);
+        return (this.state.display !== nextState.display);
     }
 
     onNumberPressed = (num) => {
