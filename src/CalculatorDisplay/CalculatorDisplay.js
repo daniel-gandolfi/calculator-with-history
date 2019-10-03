@@ -1,11 +1,8 @@
-import React, {Component} from "react";
+import React from "react";
 import styles from "./CalculatorDisplay.module.scss"
-class CalculatorDisplay extends Component {
-
-    render(){
-        return <div className={styles.display}>
-            {this.props.value}
-        </div>
-    }
+function CalculatorDisplay (props){
+    return <div className={styles.display}>
+        {props.value}
+    </div>
 }
 export default CalculatorDisplay

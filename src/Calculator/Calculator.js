@@ -36,6 +36,10 @@ class Calculator extends Component {
         );
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return (this.state.display !== nextState.state.display);
+    }
+
     onNumberPressed = (num) => {
 
         var clearField = this.state.isEqualJustPressed || this.state.display === "0"
