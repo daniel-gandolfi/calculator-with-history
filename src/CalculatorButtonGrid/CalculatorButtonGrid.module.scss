@@ -1,23 +1,24 @@
 @import "../theme";
 .container{
-  $width:90vw;
   display: grid;
   grid-template: auto / 1fr 1fr 1fr 1fr;
   grid-gap: .5rem;
-  width: $width;
-  height: $width/4*5;
-  $space-from-bottom: (100vw - $width)/2;
-  margin: 0 auto $space-from-bottom auto;
+  justify-items: center;
+  margin-bottom: 1rem;
 }
 .button {
   border:none;
   color: $main-text-color;
-  font-size: inherit;
-  padding: .25rem;
+  font-size: 1.2em;
+  padding: 0;
   box-sizing: content-box;
   line-height: 1;
   border-radius: 50%;
   outline: none;
+  display: inline-block;
+  height: 3em;
+  width: 3em;
+  text-align: center;
 }
 .button--zero, .button--dot, .button--number {
   @extend .button;
