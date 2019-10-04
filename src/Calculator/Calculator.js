@@ -65,11 +65,13 @@ class Calculator extends Component {
         }
     }
     onDotPressed = () => {
-        this.resetHistoryIterator();
-        this.setState({
-            display: this.state.display + ".",
-            isEqualJustPressed: false
-        })
+        if (("" + this.state.display).indexOf(".") === -1) {
+            this.resetHistoryIterator();
+            this.setState({
+                display: this.state.display + ".",
+                isEqualJustPressed: false
+            })
+        }
     }
     onOperationPressed = (mathOperation) => {
         var operationNode;
@@ -114,6 +116,7 @@ class Calculator extends Component {
         })
     }
     reset = () => {
+        this.resetHistoryIterator();
         this.setState(createDefaultState())
     }
     deleteLastChar = () => {
