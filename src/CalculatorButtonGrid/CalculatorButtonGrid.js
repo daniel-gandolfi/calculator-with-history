@@ -39,4 +39,4 @@ function CalculatorButtonGrid (props){
         <button className={styles["button--math-operation"]} onClick={onEqualPressed}>=</button>
     </div>
 }
-export default CalculatorButtonGrid
+export default React.memo(CalculatorButtonGrid)
