@@ -33,20 +33,29 @@ function History(size) {
     }
 
     function getIterator() {
-        var index = elementList.length - 1;
-        if (index < 0) {
+        var index = null;
+        if (elementList.length === 0) {
             return null;
         } else {
             const previous = function () {
-                if (hasPrevious()) {
-                    --index;
+                if (index === null) {
+                    index = elementList.length -1;
                     return elementList[index];
                 } else {
-                    return null;
+                    if (hasPrevious()) {
+                        --index;
+                        return elementList[index];
+                    } else {
+                        return null;
+                    }
                 }
             };
             const hasPrevious = function () {
-                return index !== 0;
+                if (index === null) {
+                    return elementList.length !== 0;
+                } else {
+                    return index !== 0;
+                }
             };
             const next = function () {
                 if (hasNext()) {
@@ -57,7 +66,11 @@ function History(size) {
                 }
             };
             const hasNext = function () {
-                return index !== elementList.length - 1;
+                if (index !== null) {
+                    return index !== elementList.length - 1;
+                } else {
+                    return false;
+                }
             };
             const first = function () {
                 index = 0;

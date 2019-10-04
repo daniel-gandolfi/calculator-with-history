@@ -144,7 +144,17 @@ function ExpressionTreeCostructor() {
     }
     return {
         addNode: _addNode,
-        getRoot: ()=>getNodeRoot.call(this,previousNode)
+        getRoot: ()=>getNodeRoot.call(this,previousNode),
+        getLastNodeTypeDescriptor: function () {
+            if (previousNode) {
+                return {
+                    nodeType: previousNode.getNodeType(),
+                    mathOperationType: previousNode.isOperationNode() ? previousNode.mathOperation: null
+                }
+            } else {
+                return null;
+            }
+        }
     }
 }
 

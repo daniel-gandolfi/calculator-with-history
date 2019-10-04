@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import CalculatorDisplay from "../CalculatorDisplay/CalculatorDisplay";
 import CalculatorButtonGrid from "../CalculatorButtonGrid/CalculatorButtonGrid";
-import {ADD, MIN, MUL, DIV} from "../MathOperations"
+import {ADD, DIV, MIN, MUL} from "../MathOperations"
 import ExpressionNode from "../expression-graph/ExpressionNode";
 import ExpressionTreeCostructor
     from "../expression-graph/ExpressionTreeCostructor";
@@ -9,21 +9,26 @@ import styles from "./Calculator.module.scss"
 import History from "../History";
 
 import {
-    AddExpressionNode, DivExpressionNode,
-    MinExpressionNode, MulExpressionNode
+    AddExpressionNode,
+    DivExpressionNode,
+    MinExpressionNode,
+    MulExpressionNode
 } from "../expression-graph/MathOperationNodes";
+import * as NodeTypes from "../expression-graph/ExpressionNodeTypes";
 
 function createDefaultState() {
     return {
-        display: "0",
+        display: DEFAULT_DISPLAY_VALUE,
         treeConstructor: new ExpressionTreeCostructor(),
         isEqualJustPressed: false,
-        currentHistoryIterator: null
+        currentHistoryIterator: null,
+        isShowingHistory: false,
+        isClean: true
     }
 }
 
 const HISTORY_SIZE = 30;
-
+const DEFAULT_DISPLAY_VALUE = "0";
 class Calculator extends Component {
     constructor() {
         super();
@@ -42,7 +47,7 @@ class Calculator extends Component {
 
     onNumberPressed = (num) => {
 
-        var clearField = this.state.isEqualJustPressed || this.state.display === "0"
+        var clearField = this.state.isEqualJustPressed || this.state.isClean;
         var displayValue;
         if (clearField) {
             displayValue = num
@@ -54,7 +59,9 @@ class Calculator extends Component {
 
         this.setState({
             display: displayValue,
-            isEqualJustPressed: false
+            isEqualJustPressed: false,
+            isShowingHistory: false,
+            isClean: false
         })
     }
     resetHistoryIterator = () => {
@@ -69,51 +76,79 @@ class Calculator extends Component {
             this.resetHistoryIterator();
             this.setState({
                 display: this.state.display + ".",
-                isEqualJustPressed: false
+                isEqualJustPressed: false,
+                isShowingHistory: false
             })
         }
     }
+    isMinusSignTheOnlyCharVisible = () => {
+        const isMinusSignVisible = ("" + this.state.display).indexOf("-") !== -1;
+        return isMinusSignVisible && this.state.display.length === 1;
+    }
     onOperationPressed = (mathOperation) => {
+        const tree = this.state.treeConstructor;
+        const lastNodeDescriptor = tree.getLastNodeTypeDescriptor();
         var operationNode;
-        switch (mathOperation) {
-            case ADD:
-                operationNode = new AddExpressionNode([]);
-                break;
-            case MIN:
-                operationNode = new MinExpressionNode([]);
-                break;
-            case MUL:
-                operationNode = new MulExpressionNode([]);
-                break;
-            case DIV:
-                operationNode = new DivExpressionNode([]);
-                break;
-            default:
-                return;
+        if (this.isMinusSignTheOnlyCharVisible()) {
+            return;
         }
 
-        var number = Number(this.state.display)
-        var tree = this.state.treeConstructor;
-        tree.addNode(new ExpressionNode(number))
-        tree.addNode(operationNode);
-        this.setState({
-            display: "0",
-            tree,
-            isEqualJustPressed: false
-        })
+        if ((this.state.isClean && this.state.display === DEFAULT_DISPLAY_VALUE) || (lastNodeDescriptor && lastNodeDescriptor.nodeType === NodeTypes.OPERATION)) {
+            if (mathOperation === MIN) {
+                this.setState({
+                    display: "-",
+                    tree,
+                    isEqualJustPressed: false,
+                    isShowingHistory: false,
+                    isClean: false
+                })
+            }
+        } else {
+            switch (mathOperation) {
+                case ADD:
+                    operationNode = new AddExpressionNode([]);
+                    break;
+                case MIN:
+                    operationNode = new MinExpressionNode([]);
+                    break;
+                case MUL:
+                    operationNode = new MulExpressionNode([]);
+                    break;
+                case DIV:
+                    operationNode = new DivExpressionNode([]);
+                    break;
+                default:
+                    return;
+            }
+
+            var number = Number(this.state.display);
+            tree.addNode(new ExpressionNode(number));
+            tree.addNode(operationNode);
+            this.setState({
+                display: DEFAULT_DISPLAY_VALUE,
+                tree,
+                isEqualJustPressed: false,
+                isShowingHistory: false,
+                isClean: true
+            })
+        }
     }
     onEqualPressed = () => {
-        var number = Number(this.state.display)
-        var tree = this.state.treeConstructor;
-        tree.addNode(new ExpressionNode(number))
+        const canComputeValue = !this.state.isShowingHistory && !this.state.isEqualJustPressed && !this.isMinusSignTheOnlyCharVisible();
+        if (canComputeValue) {
+            var number = Number(this.state.display);
+            var tree = this.state.treeConstructor;
+            tree.addNode(new ExpressionNode(number));
 
-        var computedValue = tree.getRoot().resolve();
-        this.state.history.add(computedValue)
-        this.setState({
-            display: computedValue,
-            treeConstructor: new ExpressionTreeCostructor(),
-            isEqualJustPressed: true
-        })
+            var computedValue = tree.getRoot().resolve();
+            this.state.history.add(computedValue);
+            this.setState({
+                display: computedValue,
+                treeConstructor: new ExpressionTreeCostructor(),
+                isEqualJustPressed: true,
+                isClean: false
+            })
+        }
     }
     reset = () => {
         this.resetHistoryIterator();
@@ -121,9 +156,10 @@ class Calculator extends Component {
     }
     deleteLastChar = () => {
         const display = "" + this.state.display;
-        if (display !== "0") {
+        if (display !== DEFAULT_DISPLAY_VALUE) {
             this.setState({
-                display: (display.length !== 1 ? display.substr(0, display.length - 1) : "0")
+                display: (display.length !== 1 ? display.substr(0, display.length - 1) : DEFAULT_DISPLAY_VALUE),
+                isClean: display.length === 1
             })
         }
     };
@@ -133,7 +169,9 @@ class Calculator extends Component {
             this.setState({
                 treeConstructor: new ExpressionTreeCostructor(),
                 display: newTree.resolve(),
-                isEqualJustPressed: true
+                isShowingHistory: true,
+                isEqualJustPressed: false,
+                isClean: false
             })
         }
     };
@@ -149,13 +187,16 @@ class Calculator extends Component {
     };
     onBackPressed = () => {
         const currentHistoryIterator = this.getOrCreateHistoryIterator();
-        if (currentHistoryIterator.hasPrevious()) {
+        if (currentHistoryIterator && currentHistoryIterator.hasPrevious()) {
+            if (this.state.isEqualJustPressed) {
+                currentHistoryIterator.last();
+            }
             this.handleHistoryExtraction(currentHistoryIterator.previous());
         }
     };
     onForwardPressed = () => {
         const currentHistoryIterator = this.getOrCreateHistoryIterator();
-        if (currentHistoryIterator.hasNext()) {
+        if (currentHistoryIterator && currentHistoryIterator.hasNext()) {
             this.handleHistoryExtraction(currentHistoryIterator.next());
         }
     };
