@@ -19,6 +19,10 @@
   height: 3em;
   width: 3em;
   text-align: center;
+  &:hover, &:active {
+    color: black;
+    background: white;
+  }
 }
 .button--zero, .button--dot, .button--number {
   @extend .button;
