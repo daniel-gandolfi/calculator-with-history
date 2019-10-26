@@ -93,7 +93,7 @@ class Calculator extends Component {
             return;
         }
 
-        if ((this.state.isClean && this.state.display === DEFAULT_DISPLAY_VALUE) || (lastNodeDescriptor && lastNodeDescriptor.nodeType === NodeTypes.OPERATION)) {
+        if (this.state.isClean) {
             if (mathOperation === MIN) {
                 this.setState({
                     display: "-",
