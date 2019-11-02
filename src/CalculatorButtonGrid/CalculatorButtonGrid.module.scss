@@ -19,9 +19,10 @@
   height: 3em;
   width: 3em;
   text-align: center;
-  &:hover, &:active {
+  &:active {
     color: black;
     background: white;
+    box-shadow: white 0 0 5px 0;
   }
 }
 .button--zero, .button--dot, .button--number {

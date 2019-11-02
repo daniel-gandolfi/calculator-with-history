@@ -14,7 +14,6 @@ import {
     MinExpressionNode,
     MulExpressionNode
 } from "../expression-graph/MathOperationNodes";
-import * as NodeTypes from "../expression-graph/ExpressionNodeTypes";
 
 function createDefaultState() {
     return {
@@ -201,18 +200,26 @@ class Calculator extends Component {
         }
     };
 
+    getBtnGridComponent = (() => {
+        var component = (
+            <CalculatorButtonGrid
+              onNumberPressed={this.onNumberPressed}
+              onOperationPressed={this.onOperationPressed}
+              onEqualPressed={this.onEqualPressed}
+              onDotPressed={this.onDotPressed}
+              onResetPressed={this.reset}
+              onDeletePressed={this.deleteLastChar}
+              onBackPressed={this.onBackPressed}
+              onForwardPressed={this.onForwardPressed}
+            />
+        );
+        return () => component;
+    })();
+
     render() {
         return <div className={styles.container}>
             <CalculatorDisplay value={this.state.display}/>
-            <CalculatorButtonGrid onNumberPressed={this.onNumberPressed}
-                onOperationPressed={this.onOperationPressed}
-                onEqualPressed={this.onEqualPressed}
-                onDotPressed={this.onDotPressed}
-                onResetPressed={this.reset}
-                onDeletePressed={this.deleteLastChar}
-                onBackPressed={this.onBackPressed}
-                onForwardPressed={this.onForwardPressed}
-            />
+            {this.getBtnGridComponent()}
         </div>
     }
 }
