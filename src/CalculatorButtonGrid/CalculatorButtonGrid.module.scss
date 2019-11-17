@@ -19,6 +19,7 @@
   height: 3em;
   width: 3em;
   text-align: center;
+  user-select: none;
   &:active {
     color: black;
     background: white;
