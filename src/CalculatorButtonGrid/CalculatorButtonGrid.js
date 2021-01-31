@@ -34,7 +34,7 @@ function CalculatorButtonGrid (props){
       divPressed = useCallback(() => onOperationPressed(DIV), [onOperationPressed]);
 
     const numberCallbackList = numberList.map(function (number) {
-        return useCallback(()=>onNumberPressed(number), [onNumberPressed])
+        return ()=>onNumberPressed(number)
     });
 
     return <div className={styles.container}>
