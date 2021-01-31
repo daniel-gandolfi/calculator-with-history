@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "https://daniel-gandolfi.github.io/calculator-with-history/static/css/main.4e3d41ba.chunk.css",
+    "main.js": "https://daniel-gandolfi.github.io/calculator-with-history/static/js/main.5b3d6683.chunk.js",
+    "main.js.map": "https://daniel-gandolfi.github.io/calculator-with-history/static/js/main.5b3d6683.chunk.js.map",
+    "runtime-main.js": "https://daniel-gandolfi.github.io/calculator-with-history/static/js/runtime-main.7df44d3d.js",
+    "runtime-main.js.map": "https://daniel-gandolfi.github.io/calculator-with-history/static/js/runtime-main.7df44d3d.js.map",
+    "static/js/2.77c7b40a.chunk.js": "https://daniel-gandolfi.github.io/calculator-with-history/static/js/2.77c7b40a.chunk.js",
+    "static/js/2.77c7b40a.chunk.js.map": "https://daniel-gandolfi.github.io/calculator-with-history/static/js/2.77c7b40a.chunk.js.map",
+    "index.html": "https://daniel-gandolfi.github.io/calculator-with-history/index.html",
+    "static/css/main.4e3d41ba.chunk.css.map": "https://daniel-gandolfi.github.io/calculator-with-history/static/css/main.4e3d41ba.chunk.css.map",
+    "static/js/2.77c7b40a.chunk.js.LICENSE.txt": "https://daniel-gandolfi.github.io/calculator-with-history/static/js/2.77c7b40a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7df44d3d.js",
+    "static/js/2.77c7b40a.chunk.js",
+    "static/css/main.4e3d41ba.chunk.css",
+    "static/js/main.5b3d6683.chunk.js"
+  ]
+}
